@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Admin } from "./myBlog/admin/admin";
 import { Client } from "./myBlog/client/client";
 import { Category } from "./myBlog/admin/category/category";
+import { Blog } from "./myBlog/admin/blog/blog";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path={"/admin/*"} element={<Admin />} />
           <Route path={"/admin/category"} element={<Category />} />
+          <Route path={"/admin/blog"} element={<Blog />} />
           <Route path={"*"} element={<Client />} />
         </Routes>
       </BrowserRouter>
