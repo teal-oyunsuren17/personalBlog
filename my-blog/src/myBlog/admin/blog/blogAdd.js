@@ -8,13 +8,17 @@ export function BlogAdd() {
   const [categoryId, setCategoryId] = useState("");
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+  const [picture, setPicture] = useState("");
 
   function submit() {
-    console.log({ text, categoryId });
-
+    setTitle("");
+    setText("");
+    setPicture("");
+    setCategoryId("");
     axios
       .post("http://localhost:8000/blog", {
         title,
+        picture,
         categoryId,
         text,
       })
@@ -30,11 +34,21 @@ export function BlogAdd() {
     <div>
       <BlogSelector value={categoryId} onChange={(val) => setCategoryId(val)} />
 
-      <input
-        placeholder="medeenii garchig"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
+      <div>
+        <input
+          placeholder="medeenii garchig"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+      </div>
+
+      <div>
+        <input
+          placeholder="zurgaa oruul"
+          value={picture}
+          onChange={(e) => setPicture(e.target.value)}
+        />
+      </div>
 
       <CKEditor
         editor={ClassicEditor}

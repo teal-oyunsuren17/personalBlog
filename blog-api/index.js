@@ -85,6 +85,12 @@ app.get("/blog/:id", (req, res) => {
   const { id } = req.params;
   const blog = readBlog();
   const one = blog.find((blog) => blog.id === id);
+
+  const categories = readCategory();
+  const category = categories.find(
+    (category) => category.id === one.categoryId
+  );
+  one.category = category;
   if (one) {
     res.json(one);
   } else {
@@ -94,9 +100,10 @@ app.get("/blog/:id", (req, res) => {
 
 app.post("/blog", (req, res) => {
   const { title } = req.body;
+  const { picture } = req.body;
   const { categoryId } = req.body;
   const { text } = req.body;
-  const newBlog = { id: v4(), title, categoryId, text };
+  const newBlog = { id: v4(), title, categoryId, text, picture };
   const blog = readBlog();
   blog.unshift(newBlog);
   fs.writeFileSync("blog.json", JSON.stringify(blog));

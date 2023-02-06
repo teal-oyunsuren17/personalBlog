@@ -12,6 +12,7 @@ export function AdminHeader() {
         <Nav className="me-auto">
           <NavLink to={"/admin/category"}>Angilal</NavLink>
           <NavLink to={"/admin/blog"}>Medee</NavLink>
+          <NavLink to={"/admin/blogs"}>Medeenuud</NavLink>
 
           {/* <NavDropdown title="Medee" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
