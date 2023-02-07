@@ -1,9 +1,21 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function CategoryItem({ c, load }) {
+  const [category, setCategory] = useState("");
   const [newTitle, setNewTitle] = useState("");
   const [editing, setEditing] = useState(false);
+  useEffect(() => {
+    axios.get(`http://localhost:8000/category/${c.id}`).then((res) => {
+      const { data, status } = res;
+      if (status === 200) {
+        setCategory(data);
+        setNewTitle(data.title);
+      } else {
+        alert("Error");
+      }
+    });
+  }, []);
 
   function editBtn() {
     setEditing(true);
