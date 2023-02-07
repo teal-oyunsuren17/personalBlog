@@ -56,7 +56,9 @@ export function EditBlog() {
     <div>
       <BlogSelector
         value={newCategoryId}
-        onChange={(val) => setNewCategoryId(val)}
+        onChange={(val) => {
+          setNewCategoryId(val);
+        }}
       />
 
       <div>
@@ -78,7 +80,10 @@ export function EditBlog() {
       <CKEditor
         editor={ClassicEditor}
         data={newText}
-        onChange={(e) => setNewText(e.target.value)}
+        onChange={(event, editor) => {
+          const data = editor.getData();
+          setNewText(data);
+        }}
       />
 
       <button onClick={cancelBtn}>cancel</button>

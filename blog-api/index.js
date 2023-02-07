@@ -128,11 +128,17 @@ app.delete("/blog/:id", (req, res) => {
 app.put("/blog/:id", (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
+  const { categoryId } = req.body;
+  const { text } = req.body;
+  const { picture } = req.body;
   const blog = readBlog();
 
   const index = blog.findIndex((blog) => blog.id === id);
   if (index > -1) {
     blog[index].title = title;
+    blog[index].categoryId = categoryId;
+    blog[index].text = text;
+    blog[index].picture = picture;
     fs.writeFileSync("blog.json", JSON.stringify(blog));
     res.json({ updatedId: id });
   } else {
