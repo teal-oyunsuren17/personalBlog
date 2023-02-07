@@ -110,8 +110,9 @@ app.post("/blog", (req, res) => {
   res.sendStatus(201);
 });
 
-app.delete("/category/:id", (req, res) => {
+app.delete("/blog/:id", (req, res) => {
   const { id } = req.params;
+  console.log(req);
   let blog = readBlog();
   const one = blog.find((blog) => blog.id === id);
   if (one) {
@@ -124,7 +125,7 @@ app.delete("/category/:id", (req, res) => {
   }
 });
 
-app.put("/category/:id", (req, res) => {
+app.put("/blog/:id", (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
   const blog = readBlog();
