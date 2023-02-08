@@ -1,8 +1,8 @@
-GET http://localhost:8080/category 
+GET http://localhost:8080/blog 
 
 ###
 
-GET http://localhost:8080/category/id
+GET http://localhost:8000/blog/categoryId
 
 ###
 

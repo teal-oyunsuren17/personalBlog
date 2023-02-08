@@ -9,6 +9,7 @@ import { Blog } from "./myBlog/admin/blog/blog";
 import { SingleBlog } from "./myBlog/admin/blog/singleBlog";
 import { Blogs } from "./myBlog/admin/blog/blogs";
 import { EditBlog } from "./myBlog/admin/blog/editBlog";
+import { BlogOfCategory } from "./myBlog/admin/blog/blogOfCategory";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path={"/admin/blogs"} element={<Blogs />} />
           <Route path={"/blog/:id"} element={<SingleBlog />} />
           <Route path={"/edit/:id"} element={<EditBlog />} />
+          <Route path={"/category/:categoryId"} element={<BlogOfCategory />} />
           <Route path={"*"} element={<Client />} />
         </Routes>
       </BrowserRouter>

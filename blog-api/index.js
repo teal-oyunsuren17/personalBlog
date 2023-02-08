@@ -81,6 +81,18 @@ app.get("/blog", (req, res) => {
   res.json(blog);
 });
 
+app.get("/blog2/:categoryId", (req, res) => {
+  const { categoryId } = req.params;
+  const blog = readBlog();
+  const filteredBlog = blog.filter((blog) => blog.categoryId === categoryId);
+
+  if (filteredBlog) {
+    res.json(filteredBlog);
+  } else {
+    res.sendStatus(404);
+  }
+});
+
 app.get("/blog/:id", (req, res) => {
   const { id } = req.params;
   const blog = readBlog();
