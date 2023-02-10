@@ -2,13 +2,18 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import Pagination from "react-bootstrap/Pagination";
 
 export function ClientBlog() {
   const [blog, setBlog] = useState([]);
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const page = searchParams.get("page");
+  console.log(page);
+
   useEffect(() => {
-    axios.get("http://localhost:8000/blog").then((res) => {
+    axios.get(`http://localhost:8000/blog?page=${page}`).then((res) => {
       const { data, status } = res;
       if (status === 200) {
         setBlog(data);
@@ -16,7 +21,7 @@ export function ClientBlog() {
         alert("Error");
       }
     });
-  }, []);
+  }, [page]);
 
   function readOneBlog(id) {
     navigate(`/blog/${id}`);
@@ -35,6 +40,22 @@ export function ClientBlog() {
             </Card.Body>
           </Card>
         ))}
+      </div>
+      <div className="d-flex justify-content-center">
+        <Pagination>
+          <Pagination.First />
+          <Pagination.Prev />
+          {[1, 2, 3, 4, 5].map((page) => (
+            <Link to={`?page=${page}`}>
+              <Pagination.Item>{page}</Pagination.Item>
+            </Link>
+          ))}
+
+          <Pagination.Ellipsis disabled />
+          <Pagination.Item>{9}</Pagination.Item>
+          <Pagination.Next />
+          <Pagination.Last />
+        </Pagination>
       </div>
     </>
   );

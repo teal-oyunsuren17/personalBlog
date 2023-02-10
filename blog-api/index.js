@@ -78,7 +78,8 @@ function readBlog() {
 
 app.get("/blog", (req, res) => {
   const blog = readBlog();
-  res.json(blog);
+  const page = blog.slice(0, 5);
+  res.json(page);
 });
 
 app.get("/blog2/:categoryId", (req, res) => {
