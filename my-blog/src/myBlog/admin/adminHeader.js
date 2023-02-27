@@ -1,9 +1,38 @@
+import axios from "axios";
+import { useContext, useState } from "react";
+import { Navigate, NavLink, Route, Routes } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 // import NavDropdown from "react-bootstrap/NavDropdown";
-import { NavLink } from "react-router-dom";
+// import { UserContext } from "../../App";
 
+function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleLogin() {
+    axios
+      .get(
+        `http://localhost:8000/login?username=${username}&password=${password}`
+      )
+      .then((res) => {
+        const { data, status } = res;
+        if (status === 200) {
+          const { token } = data;
+          localStorage.setItem("loginToken", token);
+          window.location.reload();
+        }
+      })
+      .catch(({ response, code }) => {
+        if (response.status === 401) {
+          alert("Nuuts ug buruu baina");
+        } else {
+          alert(code);
+        }
+      });
+  }
+}
 export function AdminHeader() {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">

@@ -2,12 +2,31 @@ const express = require("express");
 const cors = require("cors");
 const { v4: uuidv4, v4 } = require("uuid");
 const fs = require("fs");
+// const bcrypt = require("bcryptjs");
 
 const port = 8000;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+const user = {
+  username: "Horolmaa",
+  password: "balgan",
+};
+let userTokens = [];
+
+app.get("/login", (req, res) => {
+  const { username, password } = req.query;
+
+  if (user.username === username && user.password === password) {
+    const token = v4();
+    userTokens.push(token);
+    res.json({ token });
+  } else {
+    res.sendStatus(401);
+  }
+});
 
 function readCategory() {
   const content = fs.readFileSync("category.json");
@@ -16,6 +35,10 @@ function readCategory() {
 }
 
 app.get("/category", (req, res) => {
+  const { q, token } = req.query;
+  if (!userTokens.includes(token)) {
+    res.sendStatus(401);
+  }
   const category = readCategory();
   res.json(category);
 });
