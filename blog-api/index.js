@@ -3,6 +3,7 @@ const cors = require("cors");
 const { v4: uuidv4, v4 } = require("uuid");
 const fs = require("fs");
 // const bcrypt = require("bcryptjs");
+const mysql = require("mysql2");
 
 const port = 8000;
 const app = express();
@@ -10,23 +11,35 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const user = {
-  username: "Horolmaa",
-  password: "balgan",
-};
-let userTokens = [];
-
-app.get("/login", (req, res) => {
-  const { username, password } = req.query;
-
-  if (user.username === username && user.password === password) {
-    const token = v4();
-    userTokens.push(token);
-    res.json({ token });
-  } else {
-    res.sendStatus(401);
-  }
+const connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  database: "evening",
 });
+
+// const user = {
+//   username: "Horolmaa",
+//   password: "balgan",
+// };
+// let userTokens = [];
+
+app.get("/mysql-test", (req, res) => {
+  connection.query(`SELECT * FROM category`, function (err, results, fields) {
+    res.json(results);
+  });
+});
+
+// app.get("/login", (req, res) => {
+//   const { username, password } = req.query;
+
+//   if (user.username === username && user.password === password) {
+//     const token = v4();
+//     userTokens.push(token);
+//     res.json({ token });
+//   } else {
+//     res.sendStatus(401);
+//   }
+// });
 
 function readCategory() {
   const content = fs.readFileSync("category.json");
@@ -35,61 +48,96 @@ function readCategory() {
 }
 
 app.get("/category", (req, res) => {
-  const { q, token } = req.query;
-  if (!userTokens.includes(token)) {
-    res.sendStatus(401);
-  }
-  const category = readCategory();
-  res.json(category);
+  // const { q, token } = req.query;
+  // if (!userTokens.includes(token)) {
+  //   res.sendStatus(401);
+  // }
+  // const category = readCategory();
+  // res.json(category);
+  connection.query(`SELECT * FROM category `, function (err, results, fields) {
+    res.json(results);
+  });
 });
 
 app.get("/category/:id", (req, res) => {
   const { id } = req.params;
-  const category = readCategory();
-  const one = category.find((category) => category.id === id);
-  if (one) {
-    res.json(one);
-  } else {
-    res.sendStatus(404);
-  }
+  // const category = readCategory();
+  // const one = category.find((category) => category.id === id);
+  // if (one) {
+  //   res.json(one);
+  // } else {
+  //   res.sendStatus(404);
+  // }
+
+  connection.query(
+    `SELECT * FROM category where id=? `,
+    [id],
+    function (err, results, fields) {
+      res.json(results[0]);
+    }
+  );
 });
 
 app.post("/category", (req, res) => {
   const { title } = req.body;
-  const newCategory = { id: v4(), title };
-  const category = readCategory();
-  category.unshift(newCategory);
-  fs.writeFileSync("category.json", JSON.stringify(category));
-  res.sendStatus(201);
+  // const newCategory = { id: v4(), title };
+  // const category = readCategory();
+  // category.unshift(newCategory);
+  // fs.writeFileSync("category.json", JSON.stringify(category));
+  // res.sendStatus(201);
+
+  connection.query(
+    `insert into category values (?,?)`,
+    [v4(), title],
+    function (err, results, fields) {
+      res.sendStatus(201);
+    }
+  );
 });
 
 app.delete("/category/:id", (req, res) => {
   const { id } = req.params;
-  let category = readCategory();
-  const one = category.find((category) => category.id === id);
-  if (one) {
-    const newCategory = category.filter((category) => category.id !== id);
-    fs.writeFileSync("category.json", JSON.stringify(newCategory));
-    category = newCategory;
-    res.json({ deletedId: id });
-  } else {
-    res.sendStatus(404);
-  }
+  // let category = readCategory();
+  // const one = category.find((category) => category.id === id);
+  // if (one) {
+  //   const newCategory = category.filter((category) => category.id !== id);
+  //   fs.writeFileSync("category.json", JSON.stringify(newCategory));
+  //   category = newCategory;
+  //   res.json({ deletedId: id });
+  // } else {
+  //   res.sendStatus(404);
+  // }
+
+  connection.query(
+    `delete from category where id=?`,
+    [id],
+    function (err, results, fields) {
+      res.sendStatus(201);
+    }
+  );
 });
 
 app.put("/category/:id", (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
-  const category = readCategory();
+  // const category = readCategory();
 
-  const index = category.findIndex((category) => category.id === id);
-  if (index > -1) {
-    category[index].title = title;
-    fs.writeFileSync("category.json", JSON.stringify(category));
-    res.json({ updatedId: id });
-  } else {
-    res.sendStatus(404);
-  }
+  // const index = category.findIndex((category) => category.id === id);
+  // if (index > -1) {
+  //   category[index].title = title;
+  //   fs.writeFileSync("category.json", JSON.stringify(category));
+  //   res.json({ updatedId: id });
+  // } else {
+  //   res.sendStatus(404);
+  // }
+
+  connection.query(
+    `update category set title=? where id=?`,
+    [title, id],
+    function (err, results, fields) {
+      res.json({ updatedId: id });
+    }
+  );
 });
 
 // ----------------------------------------------------------- //
@@ -181,7 +229,6 @@ app.put("/blog/:id", (req, res) => {
     res.sendStatus(404);
   }
 });
-
 app.listen(port, () => {
   console.log("Server is running on http://localhost", port);
 });
