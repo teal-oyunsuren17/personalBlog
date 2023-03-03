@@ -19,12 +19,14 @@ export function SingleBlog() {
       }
     });
   }, []);
+
   if (!oneBlog) return <div>Loading...</div>;
+
   return (
     <>
       <ClientHeader />
       <div className="text-center">
-        <Badge bg="primary">{oneBlog.category.title}</Badge>{" "}
+        <Badge bg="primary">{oneBlog.categoryName}</Badge>{" "}
         <div>
           <img style={{ height: "300px" }} src={oneBlog.picture} alt="" />
         </div>

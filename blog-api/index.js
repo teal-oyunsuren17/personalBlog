@@ -4,12 +4,14 @@ const { v4: uuidv4, v4 } = require("uuid");
 const fs = require("fs");
 // const bcrypt = require("bcryptjs");
 const mysql = require("mysql2");
+// const { categoryRouter } = require("./routes/categoryController");
 
 const port = 8000;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+// app.use("/category", categoryRouter);
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -41,11 +43,11 @@ app.get("/mysql-test", (req, res) => {
 //   }
 // });
 
-function readCategory() {
-  const content = fs.readFileSync("category.json");
-  const category = JSON.parse(content);
-  return category;
-}
+// function readCategory() {
+//   const content = fs.readFileSync("category.json");
+//   const category = JSON.parse(content);
+//   return category;
+// }
 
 app.get("/category", (req, res) => {
   // const { q, token } = req.query;
@@ -141,45 +143,69 @@ app.put("/category/:id", (req, res) => {
 });
 
 // ----------------------------------------------------------- //
-function readBlog() {
-  const content = fs.readFileSync("blog.json");
-  const blog = JSON.parse(content);
-  return blog;
-}
+
+// function readBlog() {
+//   const content = fs.readFileSync("blog.json");
+//   const blog = JSON.parse(content);
+//   return blog;
+// }
 
 app.get("/blog", (req, res) => {
-  const blog = readBlog();
-  const page = blog.slice(0, 5);
-  res.json(page);
+  // const blog = readBlog();
+  // const page = blog.slice(0, 5);
+  // res.json(page);
+  connection.query(`SELECT * FROM blog`, function (err, results, fields) {
+    res.json(results);
+  });
 });
 
 app.get("/blog2/:categoryId", (req, res) => {
   const { categoryId } = req.params;
-  const blog = readBlog();
-  const filteredBlog = blog.filter((blog) => blog.categoryId === categoryId);
+  // const blog = readBlog();
+  // const filteredBlog = blog.filter((blog) => blog.categoryId === categoryId);
 
-  if (filteredBlog) {
-    res.json(filteredBlog);
-  } else {
-    res.sendStatus(404);
-  }
+  // if (filteredBlog) {
+  //   res.json(filteredBlog);
+  // } else {
+  //   res.sendStatus(404);
+  // }
+
+  connection.query(
+    `SELECT * FROM blog where categoryId=?`,
+    [categoryId],
+    function (err, results, fields) {
+      res.json(results);
+    }
+  );
 });
 
 app.get("/blog/:id", (req, res) => {
   const { id } = req.params;
-  const blog = readBlog();
-  const one = blog.find((blog) => blog.id === id);
+  // const blog = readBlog();
+  // const one = blog.find((blog) => blog.id === id);
 
-  const categories = readCategory();
-  const category = categories.find(
-    (category) => category.id === one.categoryId
+  // const categories = readCategory();
+  // const category = categories.find(
+  //   (category) => category.id === one.categoryId
+  // );
+  // one.category = category;
+  // if (one) {
+  //   res.json(one);
+  // } else {
+  //   res.sendStatus(404);
+  // }
+
+  connection.query(
+    // `SELECT * FROM blog where id=? `,
+    `select blog.title as title, blog.text, category.title as categoryName , blog.picture , blog.categoryId from blog left join category on blog.categoryId=category.id where blog.id=? `,
+    [id],
+    function (err, results, fields) {
+      if (results.length) {
+        res.json(results[0]);
+      } else {
+      }
+    }
   );
-  one.category = category;
-  if (one) {
-    res.json(one);
-  } else {
-    res.sendStatus(404);
-  }
 });
 
 app.post("/blog", (req, res) => {
@@ -187,26 +213,41 @@ app.post("/blog", (req, res) => {
   const { picture } = req.body;
   const { categoryId } = req.body;
   const { text } = req.body;
-  const newBlog = { id: v4(), title, categoryId, text, picture };
-  const blog = readBlog();
-  blog.unshift(newBlog);
-  fs.writeFileSync("blog.json", JSON.stringify(blog));
-  res.sendStatus(201);
+  // const newBlog = { id: v4(), title, categoryId, text, picture };
+  // const blog = readBlog();
+  // blog.unshift(newBlog);
+  // fs.writeFileSync("blog.json", JSON.stringify(blog));
+  // res.sendStatus(201);
+
+  connection.query(
+    `insert into blog values (?,?,?,?,?)`,
+    [categoryId, text, picture, title, v4()],
+    function (err, results, fields) {
+      res.sendStatus(201);
+    }
+  );
 });
 
 app.delete("/blog/:id", (req, res) => {
   const { id } = req.params;
-  console.log(req);
-  let blog = readBlog();
-  const one = blog.find((blog) => blog.id === id);
-  if (one) {
-    const newBlog = blog.filter((blog) => blog.id !== id);
-    fs.writeFileSync("blog.json", JSON.stringify(newBlog));
-    blog = newBlog;
-    res.json({ deletedId: id });
-  } else {
-    res.sendStatus(404);
-  }
+  // let blog = readBlog();
+  // const one = blog.find((blog) => blog.id === id);
+  // if (one) {
+  //   const newBlog = blog.filter((blog) => blog.id !== id);
+  //   fs.writeFileSync("blog.json", JSON.stringify(newBlog));
+  //   blog = newBlog;
+  //   res.json({ deletedId: id });
+  // } else {
+  //   res.sendStatus(404);
+  // }
+
+  connection.query(
+    `delete from blog where id=?`,
+    [id],
+    function (err, results, fields) {
+      res.sendStatus(201);
+    }
+  );
 });
 
 app.put("/blog/:id", (req, res) => {
@@ -215,19 +256,27 @@ app.put("/blog/:id", (req, res) => {
   const { categoryId } = req.body;
   const { text } = req.body;
   const { picture } = req.body;
-  const blog = readBlog();
 
-  const index = blog.findIndex((blog) => blog.id === id);
-  if (index > -1) {
-    blog[index].title = title;
-    blog[index].categoryId = categoryId;
-    blog[index].text = text;
-    blog[index].picture = picture;
-    fs.writeFileSync("blog.json", JSON.stringify(blog));
-    res.json({ updatedId: id });
-  } else {
-    res.sendStatus(404);
-  }
+  // const blog = readBlog();
+  // const index = blog.findIndex((blog) => blog.id === id);
+  // if (index > -1) {
+  //   blog[index].title = title;
+  //   blog[index].categoryId = categoryId;
+  //   blog[index].text = text;
+  //   blog[index].picture = picture;
+  //   fs.writeFileSync("blog.json", JSON.stringify(blog));
+  //   res.json({ updatedId: id });
+  // } else {
+  //   res.sendStatus(404);
+  // }
+
+  connection.query(
+    `update blog set title=? , categoryId=?, text=?, picture=? where id=?`,
+    [title, categoryId, text, picture, id],
+    function (err, results, fields) {
+      res.json({ updatedId: id });
+    }
+  );
 });
 app.listen(port, () => {
   console.log("Server is running on http://localhost", port);

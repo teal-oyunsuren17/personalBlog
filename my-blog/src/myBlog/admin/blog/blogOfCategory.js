@@ -34,7 +34,12 @@ export function BlogOfCategory() {
             <Card.Img variant="top" src={blog.picture} />
             <Card.Body>
               <Card.Title>{blog.title}</Card.Title>
-              <Button variant="primary" onClick={() => changePath(blog.id)}>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  changePath(blog.id);
+                }}
+              >
                 Мэдээг унших уу?
               </Button>
             </Card.Body>

@@ -10,7 +10,6 @@ export function ClientBlog() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const page = searchParams.get("page");
-  console.log(page);
 
   useEffect(() => {
     axios.get(`http://localhost:8000/blog?page=${page}`).then((res) => {
@@ -30,7 +29,7 @@ export function ClientBlog() {
     <>
       <div className="d-flex gap-5 flex-wrap justify-content-evenly">
         {blog.map((blog) => (
-          <Card key={blog.id} style={{ width: "25rem" }}>
+          <Card key={blog.categoryId} style={{ width: "25rem" }}>
             <Card.Img variant="top" src={blog.picture} />
             <Card.Body className="d-flex flex-column justify-content-between">
               <Card.Title>{blog.title}</Card.Title>
