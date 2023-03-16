@@ -25,7 +25,7 @@ export function Blogs() {
       <AdminHeader />
       <div>
         {blogs.map((blog) => (
-          <OneBlog key={blog.id} blog={blog} load={loadBlog} />
+          <OneBlog key={blog._id} blog={blog} load={loadBlog} />
         ))}
       </div>
     </>

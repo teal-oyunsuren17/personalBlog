@@ -11,7 +11,7 @@ export function BlogOfCategory() {
   const { categoryId } = useParams();
   const [blogs, setBlogs] = useState([]);
   useEffect(() => {
-    axios.get(`http://localhost:8000/blog2/${categoryId}`).then((res) => {
+    axios.get(`http://localhost:8000/blog/${categoryId}`).then((res) => {
       const { data, status } = res;
       if (status === 200) {
         setBlogs(data);
@@ -37,7 +37,7 @@ export function BlogOfCategory() {
               <Button
                 variant="primary"
                 onClick={() => {
-                  changePath(blog.id);
+                  changePath(blog._id);
                 }}
               >
                 Мэдээг унших уу?

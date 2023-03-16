@@ -22,7 +22,7 @@ function App() {
           <Route path={"/admin/blogs"} element={<Blogs />} />
           <Route path={"/blog/:id"} element={<SingleBlog />} />
           <Route path={"/edit/:id"} element={<EditBlog />} />
-          <Route path={"/category/:categoryId"} element={<BlogOfCategory />} />
+          <Route path={"blog/:categoryId"} element={<BlogOfCategory />} />
           <Route path={"*"} element={<Client />} />
         </Routes>
       </BrowserRouter>

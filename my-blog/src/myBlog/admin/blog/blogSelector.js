@@ -21,7 +21,7 @@ export function BlogSelector({ value, onChange }) {
         <option value={""}>...</option>
         {categories.map((c) => (
           <option key={c.id} value={c.id}>
-            {c.title}
+            {c.name}
           </option>
         ))}
       </select>

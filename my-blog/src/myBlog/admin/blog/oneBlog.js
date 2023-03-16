@@ -16,11 +16,11 @@ export function OneBlog({ blog, load }) {
   return (
     <div>
       <div className={"d-flex flex-row gap-5"}>
-        <p>{blog.id}</p>
+        <p>{blog._id}</p>
         <p>{blog.title}</p>
         <div>
-          <button onClick={() => editBlog(blog.id)}>edit</button>
-          <button onClick={() => deleteBlog(blog.id)}>delete</button>
+          <button onClick={() => editBlog(blog._id)}>edit</button>
+          <button onClick={() => deleteBlog(blog._id)}>delete</button>
         </div>
       </div>
     </div>

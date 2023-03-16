@@ -12,7 +12,7 @@ export function ClientBlog() {
   const page = searchParams.get("page");
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/blog?page=${page}`).then((res) => {
+    axios.get(`http://localhost:8000/blog`).then((res) => {
       const { data, status } = res;
       if (status === 200) {
         setBlog(data);
@@ -22,8 +22,8 @@ export function ClientBlog() {
     });
   }, [page]);
 
-  function readOneBlog(id) {
-    navigate(`/blog/${id}`);
+  function readOneBlog(categoryId) {
+    navigate(`/blog/${categoryId}`);
   }
   return (
     <>
@@ -33,7 +33,10 @@ export function ClientBlog() {
             <Card.Img variant="top" src={blog.picture} />
             <Card.Body className="d-flex flex-column justify-content-between">
               <Card.Title>{blog.title}</Card.Title>
-              <Button onClick={() => readOneBlog(blog.id)} variant="primary">
+              <Button
+                onClick={() => readOneBlog(blog.categoryId)}
+                variant="primary"
+              >
                 Мэдээг унших
               </Button>
             </Card.Body>

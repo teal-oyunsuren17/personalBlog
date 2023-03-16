@@ -1,0 +1,21 @@
+use("sample_mflix");
+db.movies.insertOne({
+  plot:"Aspiring musician Miguel, confronted with his family's ancestral ban on music, enters the Land of the Dead to find his great-great-grandfather, a legendary singer.",
+  genres: ["Animation", "Comedy", "Adventure"],
+  runtime: 105,
+  cast: ["Anthony Gonzalez", "Benjamin Bratt", "Renee Victor"],
+  num_mflix_comments: 0,
+  poster: "https://www.lewisginter.org/wp-content/uploads/2020/02/coco-e1583865289818.jpg",
+  title: "Coco",
+  fullplot:
+    "The Madrigals are an extraordinary family who live hidden in the mountains of Colombia in a charmed place called the Encanto. The magic of the Encanto has blessed every child in the family with a unique gift -- every child except Mirabel. However, she soon may be the Madrigals last hope when she discovers that the magic surrounding the Encanto is now in danger.",
+  languages: ["English", "Spanish"],
+  released: ISODate("2017-11-22T00:00:00.000+00:00"),
+  awards: { wins: 110, nominations: 40, text: "110 wins, 40 nominations." },
+  lastupdated: null,
+  year: "2017è",
+  imbd: { rating: 8.4, votes: 522493, id: 16322 },
+  countries: ["UK"],
+  type: "movie",
+  tomatoes: { viewer: { rating: 9, numReviews: 100 }, lastUpdated: null },
+});

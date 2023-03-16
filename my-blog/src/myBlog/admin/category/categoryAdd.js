@@ -22,10 +22,6 @@ export function CategoryAdd() {
     loadCategories();
   }, []);
 
-  // axios.interceptors.request.use((config) => {
-  //   console.log("Request sent to: ", config.url);
-  //   return config;
-  // });
   return (
     <>
       <div

@@ -25,8 +25,8 @@ export function ClientHeader() {
 
         <Nav className="me-auto">
           {categories.map((category) => (
-            <NavLink key={category.id} to={`/category/${category.id}`}>
-              {category.title}
+            <NavLink key={category._id} to={`/blog/${category.name}`}>
+              {category.name}
             </NavLink>
           ))}
         </Nav>

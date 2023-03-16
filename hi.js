@@ -1,0 +1,20 @@
+db.movies.insertOne({
+  plot: "An armed conflict forces Pedro and Alma Madrigal, a young married couple, to flee their home village in Colombia with their infant triplets Julieta, Pepa and Bruno. The attackers kill Pedro, but the candle of Alma magically repels the attackers and creates Casita, a sentient house for the family located in Encanto, a magical realm, bordered by high mountains.",
+  genres: ["Animation", "Comedy", "Family"],
+  runtime: 102,
+  cast: ["Stephanie Beatriz", "John Leguizamo", "Jessica Darrow"],
+  num_mflix_comments: 0,
+  poster: "https://upload.wikimedia.org/wikipedia/en/8/83/Encanto_poster.jpg",
+  title: "Encanto",
+  fullplot:
+    "The Madrigals are an extraordinary family who live hidden in the mountains of Colombia in a charmed place called the Encanto. The magic of the Encanto has blessed every child in the family with a unique gift -- every child except Mirabel. However, she soon may be the Madrigals last hope when she discovers that the magic surrounding the Encanto is now in danger.",
+  languages: ["English", "Spanish"],
+  released: ISODate("2021-11-24T00:00:00.000+00:00"),
+  awards: { wins: 49, nominations: 84, text: "49 wins, 84 nominations." },
+  lastupdated: null,
+  year: "2021è",
+  imbd: { rating: 7.2, votes: 230922, id: 16322 },
+  countries: ["UK"],
+  type: "movie",
+  tomatoes: { viewer: { rating: 9, numReviews: 100 }, lastUpdated: null },
+});

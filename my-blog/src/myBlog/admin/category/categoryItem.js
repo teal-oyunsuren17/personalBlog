@@ -2,15 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export function CategoryItem({ c, load }) {
-  const [category, setCategory] = useState("");
   const [newTitle, setNewTitle] = useState("");
   const [editing, setEditing] = useState(false);
   useEffect(() => {
-    axios.get(`http://localhost:8000/category/${c.id}`).then((res) => {
+    axios.get(`http://localhost:8000/category/${c._id}`).then((res) => {
       const { data, status } = res;
       if (status === 200) {
-        setCategory(data);
-        setNewTitle(data.title);
+        setNewTitle(data.name);
       } else {
         alert("Error");
       }
@@ -22,8 +20,8 @@ export function CategoryItem({ c, load }) {
   }
 
   function deleteBtn() {
-    if (window.confirm(`delete? ${c.title}`)) {
-      axios.delete(`http://localhost:8000/category/${c.id}`).then((res) => {
+    if (window.confirm(`delete? ${c.name}`)) {
+      axios.delete(`http://localhost:8000/category/${c._id}`).then((res) => {
         load();
       });
     }
@@ -35,7 +33,7 @@ export function CategoryItem({ c, load }) {
 
   function saveBtn() {
     axios
-      .put(`http://localhost:8000/category/${c.id}`, { title: newTitle })
+      .put(`http://localhost:8000/category/${c._id}`, { title: newTitle })
       .then((res) => {
         load();
       });
@@ -48,7 +46,7 @@ export function CategoryItem({ c, load }) {
         <div className="d-flex justify-content-between ">
           {!editing ? (
             <>
-              <h2>{c.title}</h2>
+              <h2>{c.name}</h2>
               <div>
                 <button onClick={editBtn}>edit</button>
                 <button onClick={deleteBtn}>delete</button>
