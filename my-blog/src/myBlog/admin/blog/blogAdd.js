@@ -43,6 +43,14 @@ export function BlogAdd() {
       </div>
 
       <div>
+        <form
+          action="http://localhost:8000/upload-image"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <input type="file" name="image" />
+          <input type={"submit"} name="submit" />
+        </form>
         <input
           placeholder="zurgaa oruul"
           value={picture}
