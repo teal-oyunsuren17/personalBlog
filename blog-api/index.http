@@ -1,0 +1,18 @@
+GET http://localhost:8080/blog 
+
+###
+
+GET http://localhost:8000/blog/categoryId
+
+###
+
+POST http://localhost:8080/category
+content-type: application/json
+
+{
+    "title": "sample"
+}
+
+###
+
+DELETE http://localhost:8080/category/id
