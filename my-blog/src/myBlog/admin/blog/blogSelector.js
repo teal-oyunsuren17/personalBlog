@@ -20,7 +20,7 @@ export function BlogSelector({ value, onChange }) {
       <select value={value} onChange={(e) => onChange(e.target.value)}>
         <option value={""}>...</option>
         {categories.map((c) => (
-          <option key={c.id} value={c.id}>
+          <option key={c._id} value={c._id}>
             {c.name}
           </option>
         ))}

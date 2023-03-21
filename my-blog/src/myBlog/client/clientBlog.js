@@ -6,37 +6,34 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Pagination from "react-bootstrap/Pagination";
 
 export function ClientBlog() {
-  const [blog, setBlog] = useState([]);
+  const [blogs, setBlogs] = useState([]);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const page = searchParams.get("page");
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/blog`).then((res) => {
+    axios.get(`http://localhost:8000/blog/`).then((res) => {
       const { data, status } = res;
       if (status === 200) {
-        setBlog(data);
+        setBlogs(data);
       } else {
         alert("Error");
       }
     });
   }, [page]);
 
-  function readOneBlog(categoryId) {
-    navigate(`/blog/${categoryId}`);
+  function readOneBlog(id) {
+    navigate(`/blog/${id}`);
   }
   return (
     <>
       <div className="d-flex gap-5 flex-wrap justify-content-evenly">
-        {blog.map((blog) => (
-          <Card key={blog.categoryId} style={{ width: "25rem" }}>
-            <Card.Img variant="top" src={blog.picture} />
+        {blogs.map((blog) => (
+          <Card key={blog._id} style={{ width: "25rem" }}>
+            <Card.Img variant="top" src={blog.picture.path} />
             <Card.Body className="d-flex flex-column justify-content-between">
               <Card.Title>{blog.title}</Card.Title>
-              <Button
-                onClick={() => readOneBlog(blog.categoryId)}
-                variant="primary"
-              >
+              <Button onClick={() => readOneBlog(blog._id)} variant="primary">
                 Мэдээг унших
               </Button>
             </Card.Body>

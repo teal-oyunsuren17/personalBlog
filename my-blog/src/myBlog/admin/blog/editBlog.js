@@ -27,14 +27,6 @@ export function EditBlog() {
         alert("Error");
       }
     });
-
-    // axios.get(`http://localhost:8000/upload-image`).then((res) => {
-    //   const { data, status } = res;
-    //   if (status === 200) {
-    //     console.log(data);
-    //     console.log(status);
-    //   }
-    // });
   }
 
   useEffect(() => {

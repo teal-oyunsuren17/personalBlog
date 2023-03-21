@@ -8,24 +8,48 @@ export function BlogAdd() {
   const [categoryId, setCategoryId] = useState("");
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const [picture, setPicture] = useState("");
+  const [picture, setPicture] = useState(null);
+  const [uploading, setUploading] = useState(false);
+
+  async function handleFile(event) {
+    setUploading(true);
+    const imageFile = event.target.files[0];
+    const formData = new FormData();
+    formData.append("image", imageFile);
+
+    if (imageFile) {
+      await fetch("http://localhost:8000/upload-image", {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPicture(data);
+          setUploading(false);
+        });
+    } else {
+      setUploading(false);
+      setPicture(null);
+    }
+  }
 
   function submit() {
     setTitle("");
     setText("");
-    setPicture("");
     setCategoryId("");
+    setPicture(null);
     axios
       .post("http://localhost:8000/blog", {
         title,
-        picture,
         categoryId,
         text,
+        picture,
       })
       .then((res) => {
         const { status } = res;
         if (status === 201) {
           alert("Success");
+          window.location.reload();
         }
       });
   }
@@ -43,19 +67,11 @@ export function BlogAdd() {
       </div>
 
       <div>
-        <form
-          action="http://localhost:8000/upload-image"
-          method="post"
-          enctype="multipart/form-data"
-        >
-          <input type="file" name="image" />
-          <input type={"submit"} name="submit" />
-        </form>
-        <input
-          placeholder="zurgaa oruul"
-          value={picture}
-          onChange={(e) => setPicture(e.target.value)}
-        />
+        <input type="file" name="image" onChange={handleFile} />
+        <div>
+          {uploading && <div className="spinner-border" role="status"></div>}
+          {picture && <img src={picture.path} alt="" width="100px" />}
+        </div>
       </div>
 
       <CKEditor

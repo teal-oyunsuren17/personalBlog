@@ -18,3 +18,60 @@ db.movies.insertOne({
   type: "movie",
   tomatoes: { viewer: { rating: 9, numReviews: 100 }, lastUpdated: null },
 });
+
+// {
+//   _id: ObjectId("573a1391f29313caabcd7586"),
+//     plot: 'In this silent predecessor to the modern documentary, film-maker Robert J. Flaherty spends one year following the lives of Nanook and his family, Inuit living in the Arctic Circle.',
+//       genres: 'Short',
+//         runtime: 79,
+//           cast: [
+//             'Allakariallak',
+//             'Nyla',
+//             'Allee',
+//             'Cunayou'
+//           ],
+//             num_mflix_comments: 0,
+//               poster: 'https://m.media-amazon.com/images/M/MV5BMTg4Njk3MjU5Ml5BMl5BanBnXkFtZTgwOTIyODg5MTE@._V1_SY1000_SX677_AL_.jpg',
+//                 title: 'Nanook of the North',
+//                   fullplot: 'Documents one year in the life of Nanook, an Eskimo (Inuit), and his family. Describes the trading, hunting, fishing and migrations of a group barely touched by industrial technology. Nanook of the North was widely shown and praised as the first full-length, anthropological documentary in cinematographic history.',
+//                     countries: [
+//                       'Brazil',
+//                       'Brazil',
+//                       'Mongolia'
+//                     ],
+//                       released: ISODate("1922-06-11T00:00:00.000Z"),
+//                         directors: [
+//                           'Robert J. Flaherty',
+//                           'John Doe'
+//                         ],
+//                           rated: 'NOT RATED',
+//                             awards: {
+//     wins: 1,
+//       nominations: 0,
+//         text: '1 win.'
+//   },
+//   lastupdated: '2015-08-29 00:27:40.327000000',
+//     year: 1922,
+//       imdb: {
+//     rating: 7.8,
+//       votes: 6918,
+//         id: 13427
+//   },
+//   type: 'Short',
+//     tomatoes: {
+//     viewer: {
+//       rating: 3.8,
+//         numReviews: 4759,
+//           meter: 80
+//     },
+//     dvd: ISODate("1999-01-26T00:00:00.000Z"),
+//       critic: {
+//       rating: 8.7,
+//         numReviews: 23,
+//           meter: 100
+//     },
+//     lastUpdated: ISODate("2015-09-15T17:02:34.000Z"),
+//       rotten: 0,
+//         fresh: 23
+//   }
+// }

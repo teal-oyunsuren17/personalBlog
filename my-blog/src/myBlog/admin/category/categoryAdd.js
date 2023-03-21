@@ -38,7 +38,7 @@ export function CategoryAdd() {
 
       <div style={{ width: "900px", margin: "auto" }}>
         {categories.map((c) => (
-          <CategoryItem key={c.id} c={c} load={loadCategories} />
+          <CategoryItem key={c._id} c={c} load={loadCategories} />
         ))}
       </div>
     </>

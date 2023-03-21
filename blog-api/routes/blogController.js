@@ -1,45 +1,45 @@
 const express = require("express");
-const { v4: uuidv4, v4 } = require("uuid");
+const { v4: uuid } = require("uuid");
 const router = express.Router();
 const mongoose = require("mongoose");
+const axios = require("axios");
 
 const blogSchema = new mongoose.Schema({
-  _id: String,
+  _id: { type: String, default: () => uuid() },
   title: String,
-  picture: String,
-  categoryId: String,
+  picture: {
+    path: String,
+  },
+  categoryId: { type: String, ref: "Category" },
   text: String,
 });
 
 const Blog = mongoose.model("Blog", blogSchema);
 
 router.get("/", async (req, res) => {
-  const list = await Blog.find();
+  const list = await Blog.find({}).populate("categoryId");
   res.json(list);
 });
 
-router.get("/:categoryId", async (req, res) => {
+router.get("/category/:categoryId", async (req, res) => {
   const { categoryId } = req.params;
 
-  const oneBlog = await Blog.find({ categoryId: categoryId });
-  res.json(oneBlog);
+  const Blogs = await Blog.find({ categoryId: categoryId });
+  res.json(Blogs);
 });
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
+  console.log(id);
 
   const one = await Blog.findOne({ _id: id });
   res.json(one);
 });
 
 router.post("/", async (req, res) => {
-  const { title } = req.body;
-  const { picture } = req.body;
-  const { categoryId } = req.body;
-  const { text } = req.body;
+  const { title, picture, categoryId, text } = req.body;
 
   await Blog.create({
-    _id: v4(),
     title: title,
     picture: picture,
     categoryId: categoryId,
@@ -58,10 +58,7 @@ router.delete("/:id", (req, res) => {
 
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-  const { title } = req.body;
-  const { categoryId } = req.body;
-  const { text } = req.body;
-  const { picture } = req.body;
+  const { title, picture, categoryId, text } = req.body;
 
   Blog.updateOne(
     { _id: id },
