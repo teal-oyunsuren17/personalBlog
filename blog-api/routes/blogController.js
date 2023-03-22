@@ -17,7 +17,7 @@ const blogSchema = new mongoose.Schema({
 const Blog = mongoose.model("Blog", blogSchema);
 
 router.get("/", async (req, res) => {
-  const list = await Blog.find({}).populate("categoryId");
+  const list = await Blog.find({});
   res.json(list);
 });
 
@@ -32,7 +32,7 @@ router.get("/:id", async (req, res) => {
   const { id } = req.params;
   console.log(id);
 
-  const one = await Blog.findOne({ _id: id });
+  const one = await Blog.findOne({ _id: id }).populate("categoryId");
   res.json(one);
 });
 

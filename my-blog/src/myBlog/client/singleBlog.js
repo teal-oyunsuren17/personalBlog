@@ -26,12 +26,12 @@ export function SingleBlog() {
     <>
       <ClientHeader />
       <div className="text-center">
-        <Badge bg="primary">{oneBlog.categoryId}</Badge>{" "}
+        <Badge bg="primary">{oneBlog.categoryId.name}</Badge>{" "}
+        <h1>{oneBlog.title}</h1>
         <div>
           (
           <img style={{ height: "300px" }} src={oneBlog.picture.path} alt="" />)
         </div>
-        <h1>{oneBlog.title}</h1>
         <div>{parse(oneBlog.text)}</div>
       </div>
     </>

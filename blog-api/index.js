@@ -3,10 +3,11 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const { v4: uuid } = require("uuid");
-const { categoryRouter } = require("./routes/categoryController");
-const { blogRouter } = require("./routes/blogController");
 const multer = require("multer");
 const cloudinary = require("cloudinary");
+const { categoryRouter } = require("./routes/categoryController");
+const { blogRouter } = require("./routes/blogController");
+const { userRouter } = require("./routes/userController");
 
 const port = 8000;
 const app = express();
@@ -55,6 +56,7 @@ mongoose
 
 app.use("/category", categoryRouter);
 app.use("/blog", blogRouter);
+app.use("/users", userRouter);
 
 app.listen(port, () => {
   console.log("Server is running on http://localhost", port);
