@@ -17,11 +17,15 @@ export function BlogOfCategory() {
         const { data, status } = res;
         if (status === 200) {
           setBlogs(data);
+          // window.location.reload();
         } else {
           alert("Error");
         }
       });
-  }, [blogs]);
+  }, [categoryId]);
+
+  console.log(categoryId);
+  // useEffect(() => {window.location.reload()}, [blogs]);
 
   function changePath(id) {
     navigate(`/blog/${id}`);

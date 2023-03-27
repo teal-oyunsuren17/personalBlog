@@ -1,9 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   function handleLogin() {
     axios
@@ -13,11 +15,17 @@ export function Register() {
       })
       .then((res) => {
         const { data, status } = res;
+        if (status === 201) {
+          alert("amjilttai burtgegdlee");
+          navigate("/admin");
+        }
       })
       .catch(({ response, code }) => {
         const { data } = response;
         alert(data.message);
       });
+    setUsername("");
+    setPassword("");
   }
 
   return (

@@ -3,6 +3,7 @@ const { v4: uuid } = require("uuid");
 const router = express.Router();
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const User = mongoose.model("User", {
   _id: { type: String, default: () => uuid() },
@@ -52,7 +53,8 @@ router.post("/login", async (req, res) => {
   if (one) {
     const auth = bcrypt.compareSync(password, one.password);
     if (auth) {
-      res.json({ token: uuid() });
+      const token = jwt.sign({ userId: one._id }, "123");
+      res.json({ token: token });
     } else {
       res.status(400).json({ message: "Buruu baina" });
     }

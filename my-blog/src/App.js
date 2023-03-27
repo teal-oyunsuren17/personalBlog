@@ -1,6 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import React from "react";
+import React, { createContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Admin } from "./myBlog/admin/admin";
 import { Client } from "./myBlog/client/client";
@@ -10,6 +10,9 @@ import { SingleBlog } from "./myBlog/client/singleBlog";
 import { Blogs } from "./myBlog/admin/blog/blogs";
 import { EditBlog } from "./myBlog/admin/blog/editBlog";
 import { BlogOfCategory } from "./myBlog/client/blogOfCategory";
+import { Register } from "./myBlog/Register";
+
+export const UserContext = createContext("Guest");
 
 function App() {
   return (
@@ -22,6 +25,7 @@ function App() {
           <Route path={"/admin/blogs"} element={<Blogs />} />
           <Route path={"/blog/:id"} element={<SingleBlog />} />
           <Route path={"/edit/:id"} element={<EditBlog />} />
+          <Route path={"/register"} element={<Register />} />
           <Route
             path={"/blog/category/:categoryId"}
             element={<BlogOfCategory />}
