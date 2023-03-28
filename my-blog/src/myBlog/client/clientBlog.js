@@ -4,23 +4,27 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Pagination from "react-bootstrap/Pagination";
+import { useBlog } from "../admin/blog/useBlog";
+
+const size = 5;
 
 export function ClientBlog() {
-  const [blogs, setBlogs] = useState([]);
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [categoryId, setCategoryId] = useState("");
+  const [pages, setPages] = useState();
+  const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
+  const { list, count } = useBlog(page, size, "", categoryId);
   const navigate = useNavigate();
-  const page = searchParams.get("page");
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/blog/`).then((res) => {
-      const { data, status } = res;
-      if (status === 200) {
-        setBlogs(data);
-      } else {
-        alert("Error");
-      }
-    });
-  }, [page]);
+    if (count) {
+      setPages(Math.ceil(count / size));
+    }
+  }, [count]);
+
+  useEffect(() => {
+    setSearchParams({ page: 1 });
+  }, [categoryId]);
 
   function readOneBlog(id) {
     navigate(`/blog/${id}`);
@@ -28,7 +32,7 @@ export function ClientBlog() {
   return (
     <>
       <div className="d-flex gap-5 flex-wrap justify-content-evenly">
-        {blogs.map((blog) => (
+        {list.map((blog) => (
           <Card key={blog._id} style={{ width: "25rem" }}>
             <Card.Img variant="top" src={blog.picture.path} />
             <Card.Body className="d-flex flex-column justify-content-between">
@@ -40,22 +44,36 @@ export function ClientBlog() {
           </Card>
         ))}
       </div>
-      <div className="d-flex justify-content-center">
-        <Pagination>
-          <Pagination.First />
-          <Pagination.Prev />
-          {[1, 2, 3, 4, 5].map((page) => (
-            <Link to={`?page=${page}`}>
-              <Pagination.Item>{page}</Pagination.Item>
-            </Link>
+      <nav aria-label="Page navigation example">
+        <ul className="pagination" style={{ flexWrap: "wrap" }}>
+          {page !== 1 && (
+            <li className="page-item">
+              <Link to={`?page=${page - 1}`} className="page-link">
+                Өмнөх
+              </Link>
+            </li>
+          )}
+
+          {[...Array(pages)].map((_, index) => (
+            <li
+              key={index}
+              className={`page-item ${page == index + 1 ? "active" : ""}`}
+            >
+              <Link to={`?page=${index + 1}`} className="page-link">
+                {index + 1}
+              </Link>
+            </li>
           ))}
 
-          <Pagination.Ellipsis disabled />
-          <Pagination.Item>{9}</Pagination.Item>
-          <Pagination.Next />
-          <Pagination.Last />
-        </Pagination>
-      </div>
+          {page !== pages && (
+            <li className="page-item">
+              <Link to={`?page=${page + 1}`} className="page-link">
+                Дараах
+              </Link>
+            </li>
+          )}
+        </ul>
+      </nav>
     </>
   );
 }

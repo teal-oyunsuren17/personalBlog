@@ -9,7 +9,7 @@ export function Blogs() {
     axios.get("http://localhost:8000/blog").then((res) => {
       const { data, status } = res;
       if (status === 200) {
-        setBlogs(data);
+        setBlogs(data.list);
       } else {
         alert("Error");
       }

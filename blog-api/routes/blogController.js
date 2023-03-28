@@ -17,8 +17,11 @@ const blogSchema = new mongoose.Schema({
 const Blog = mongoose.model("Blog", blogSchema);
 
 router.get("/", async (req, res) => {
-  const list = await Blog.find({});
-  res.json(list);
+  const list = await Blog.find({}).populate("categoryId");
+  res.json({
+    list: list,
+    count: 3,
+  });
 });
 
 router.get("/category/:categoryId", async (req, res) => {
