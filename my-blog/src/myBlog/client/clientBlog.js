@@ -1,12 +1,10 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import Pagination from "react-bootstrap/Pagination";
 import { useBlog } from "../admin/blog/useBlog";
 
-const size = 5;
+const size = 1;
 
 export function ClientBlog() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,7 +32,7 @@ export function ClientBlog() {
       <div className="d-flex gap-5 flex-wrap justify-content-evenly">
         {list.map((blog) => (
           <Card key={blog._id} style={{ width: "25rem" }}>
-            <Card.Img variant="top" src={blog.picture.path} />
+            <Card.Img variant="top" src={blog.picture.path} height="250px" />
             <Card.Body className="d-flex flex-column justify-content-between">
               <Card.Title>{blog.title}</Card.Title>
               <Button onClick={() => readOneBlog(blog._id)} variant="primary">
@@ -44,7 +42,14 @@ export function ClientBlog() {
           </Card>
         ))}
       </div>
-      <nav aria-label="Page navigation example">
+      <nav
+        aria-label="Page navigation example"
+        style={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          marginTop: "30px",
+        }}
+      >
         <ul className="pagination" style={{ flexWrap: "wrap" }}>
           {page !== 1 && (
             <li className="page-item">

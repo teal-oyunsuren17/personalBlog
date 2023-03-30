@@ -21,7 +21,7 @@ export function ClientHeader() {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
-        <NavLink to={"*"}>Home</NavLink>
+        <NavLink to={"*"}>HOME</NavLink>
 
         <Nav className="me-auto">
           {categories.map((category) => (

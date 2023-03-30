@@ -22,6 +22,7 @@ export function CategoryItem({ c, load }) {
   function deleteBtn() {
     if (window.confirm(`delete? ${c.name}`)) {
       axios.delete(`http://localhost:8000/category/${c._id}`).then((res) => {
+        console.log(res);
         load();
       });
     }
