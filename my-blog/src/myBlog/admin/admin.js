@@ -1,8 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { AdminHeader } from "../admin/adminHeader";
 import "./admin.css";
+import { Blog } from "./blog/blog";
+import { Blogs } from "./blog/blogs";
+import { EditBlog } from "./blog/editBlog";
+import { CategoryAdd } from "./category/categoryAdd";
 
 export function Admin() {
   if (!localStorage.getItem("loginToken")) {
@@ -11,6 +15,12 @@ export function Admin() {
   return (
     <>
       <AdminHeader />
+      <Routes>
+        <Route path={"/category"} element={<CategoryAdd />} />
+        <Route path={"/blog"} element={<Blog />} />
+        <Route path={"/blogs"} element={<Blogs />} />
+        <Route path={"/edit/:id"} element={<EditBlog />} />
+      </Routes>
     </>
   );
 }

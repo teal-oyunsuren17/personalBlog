@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import parse from "html-react-parser";
 import Badge from "react-bootstrap/Badge";
-import { ClientHeader } from "./clientHeader";
 
 export function SingleBlog() {
   const { id } = useParams();
@@ -24,7 +23,6 @@ export function SingleBlog() {
 
   return (
     <>
-      <ClientHeader />
       <div className="text-center">
         <Badge bg="primary">{oneBlog.categoryId.name}</Badge>{" "}
         <h1>{oneBlog.title}</h1>

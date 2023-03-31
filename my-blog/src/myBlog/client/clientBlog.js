@@ -8,10 +8,10 @@ const size = 1;
 
 export function ClientBlog() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [categoryId, setCategoryId] = useState("");
+  const [categoryId, setCategoryId] = useState();
   const [pages, setPages] = useState();
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
-  const { list, count } = useBlog(page, size, "", categoryId);
+  const { list, count } = useBlog(page, size, categoryId);
   const navigate = useNavigate();
 
   useEffect(() => {

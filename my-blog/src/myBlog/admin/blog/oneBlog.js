@@ -26,15 +26,3 @@ export function OneBlog({ blog, load }) {
     </div>
   );
 }
-
-// {!editing ? (
-//   <>
-//     <button onClick={editBlog}>edit</button>
-//     <button onClick={() => deleteBlog(blog.id)}>delete</button>
-//   </>
-// ) : (
-//   <>
-//     <button onClick={cancelBlog}>cancel</button>
-//     <button onClick={() => saveBlog(blog.id)}>save</button>
-//   </>
-// )}

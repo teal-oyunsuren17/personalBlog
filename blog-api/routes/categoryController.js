@@ -2,6 +2,7 @@ const express = require("express");
 const { v4: uuidv4, v4 } = require("uuid");
 const router = express.Router();
 const mongoose = require("mongoose");
+const { Blog } = require("./blogModel");
 
 const categorySchema = new mongoose.Schema({
   _id: String,
@@ -37,6 +38,9 @@ router.delete("/:id", (req, res) => {
 
   Category.deleteOne({ _id: id }).then(() => {
     res.json({ deletedId: id });
+    if (res.statusCode === 200) {
+      Blog.deleteMany({ categoryId: id });
+    }
   });
 });
 

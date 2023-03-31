@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useNavigate } from "react-router-dom";
-import { ClientHeader } from "./clientHeader";
 
 export function BlogOfCategory() {
   const navigate = useNavigate();
@@ -17,15 +16,11 @@ export function BlogOfCategory() {
         const { data, status } = res;
         if (status === 200) {
           setBlogs(data);
-          // window.location.reload();
         } else {
           alert("Error");
         }
       });
   }, [categoryId]);
-
-  console.log(categoryId);
-  // useEffect(() => {window.location.reload()}, [blogs]);
 
   function changePath(id) {
     navigate(`/blog/${id}`);
@@ -33,7 +28,6 @@ export function BlogOfCategory() {
   if (!blogs) return <div>Loading...</div>;
   return (
     <>
-      <ClientHeader />
       <div className="d-flex flex-wrap gap-5">
         {blogs.map((blog) => (
           <Card key={blog._id} style={{ width: "40rem", textAlign: "center" }}>

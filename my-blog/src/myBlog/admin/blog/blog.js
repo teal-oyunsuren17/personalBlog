@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { AdminHeader } from "../adminHeader";
 import { BlogAdd } from "./blogAdd";
 import axios from "axios";
 
@@ -17,7 +16,6 @@ export function Blog() {
   }
   return (
     <div>
-      <AdminHeader />
       <BlogAdd load={loadCategories} categories={categories} />
     </div>
   );

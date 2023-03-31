@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { AdminHeader } from "../adminHeader";
 import { OneBlog } from "./oneBlog";
 
 export function Blogs() {
@@ -22,7 +21,6 @@ export function Blogs() {
 
   return (
     <>
-      <AdminHeader />
       <div>
         {blogs.map((blog) => (
           <OneBlog key={blog._id} blog={blog} load={loadBlog} />

@@ -1,14 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export function useBlog(page, size, query, categoryId) {
+export function useBlog(page, size, categoryId) {
   const [list, setList] = useState([]);
   const [count, setCount] = useState();
 
   function loadBlog() {
     axios
       .get(
-        `http://localhost:8000/blog?q=${query}&page=${page}&size=${size}&categoryId=${categoryId}`
+        `http://localhost:8000/blog?page=${page}&size=${size}&categoryId=${categoryId}`
       )
       .then((res) => {
         const { data, status } = res;
@@ -24,7 +24,7 @@ export function useBlog(page, size, query, categoryId) {
 
   useEffect(() => {
     loadBlog();
-  }, [page, query, categoryId]);
+  }, [page, categoryId]);
 
   return {
     list,
