@@ -4,6 +4,7 @@ import { ClientHeader } from "./clientHeader";
 import { Route, Routes } from "react-router-dom";
 import { BlogOfCategory } from "./blogOfCategory";
 import { SingleBlog } from "./singleBlog";
+import Map from "./map";
 
 export function Client() {
   return (
@@ -16,6 +17,7 @@ export function Client() {
           element={<BlogOfCategory />}
         />
         <Route path={"/*"} element={<ClientBlog />} />
+        <Route path={"/map"} element={<Map />} />
       </Routes>
       <ClientFooter />
     </>
